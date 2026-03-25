@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Study Mentor — For Nigerian Students</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Google Fonts: Syne (display) + Nunito (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ===== HERO HEADER ===== -->
+  <header class="hero">
+    <div class="hero-badge">🇳🇬 Built for Nigerian Students</div>
+    <h1 class="hero-title">AI Study Mentor</h1>
+    <p class="hero-desc">
+      Your intelligent study companion — generate study plans, decode past questions,
+      summarise lectures, and plan your entire semester. All powered by AI.
+    </p>
+    <div class="hero-chips">
+      <span>📅 Study Plans</span>
+      <span>📖 Past Questions</span>
+      <span>📝 Note Summariser</span>
+      <span>🎙️ Lecture Audio</span>
+      <span>🗓️ Semester Planner</span>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ===== TOOL 1: Study Plan Generator ===== -->
+    <section class="card" id="study-plan-section">
+      <div class="card-icon">📅</div>
+      <h2 class="card-title">Study Plan Generator</h2>
+      <p class="card-desc">Enter your course and exam date to get a personalised daily study plan with practice sessions and revision days.</p>
+
+      <div class="form-group">
+        <label for="course-name">Course Name</label>
+        <input type="text" id="course-name" placeholder="e.g. Organic Chemistry, Macroeconomics" />
+      </div>
+      <div class="form-group">
+        <label for="exam-date">Exam Date</label>
+        <input type="date" id="exam-date" />
+      </div>
+
+      <button class="btn" onclick="generateStudyPlan()">
+        <span class="btn-icon">✨</span> Generate Study Plan
+      </button>
+
+      <div class="output-box" id="study-plan-output">
+        <p class="placeholder-text">Your study plan will appear here…</p>
+      </div>
+    </section>
+
+    <!-- ===== TOOL 2: Past Question Explainer ===== -->
+    <section class="card" id="past-question-section">
+      <div class="card-icon">📖</div>
+      <h2 class="card-title">Past Question Explainer</h2>
+      <p class="card-desc">Paste any past exam question and get a clear explanation, step-by-step answer, and concept summary.</p>
+
+      <div class="form-group">
+        <label for="past-question">Paste Your Past Question</label>
+        <textarea id="past-question" rows="5" placeholder="e.g. Explain the mechanism of SN2 reaction with an example…"></textarea>
+      </div>
+
+      <button class="btn" onclick="explainQuestion()">
+        <span class="btn-icon">🔍</span> Explain Question
+      </button>
+
+      <div class="output-box" id="past-question-output">
+        <p class="placeholder-text">The explanation will appear here…</p>
+      </div>
+    </section>
+
+    <!-- ===== TOOL 3: Lecture Note Summariser ===== -->
+    <section class="card" id="note-summariser-section">
+      <div class="card-icon">📝</div>
+      <h2 class="card-title">Lecture Note Summariser</h2>
+      <p class="card-desc">Paste your long lecture notes and get a concise summary, key bullet points, and 3 practice questions.</p>
+
+      <div class="form-group">
+        <label for="lecture-notes">Paste Lecture Notes</label>
+        <textarea id="lecture-notes" rows="7" placeholder="Paste your full lecture notes here…"></textarea>
+      </div>
+
+      <button class="btn" onclick="summariseNotes()">
+        <span class="btn-icon">📌</span> Summarise Notes
+      </button>
+
+      <div class="output-box" id="note-summariser-output">
+        <p class="placeholder-text">Your summary will appear here…</p>
+      </div>
+    </section>
+
+    <!-- ===== TOOL 4: Lecture Recording to Notes ===== -->
+    <section class="card" id="recording-section">
+      <div class="card-icon">🎙️</div>
+      <h2 class="card-title">Lecture Recording to Notes</h2>
+      <p class="card-desc">Upload an audio file or record live. We'll transcribe and convert it into structured lecture notes with key points and headings.</p>
+
+      <div class="form-group">
+        <label>Upload Audio File (MP3, WAV, M4A)</label>
+        <div class="file-upload-area" id="file-upload-area">
+          <input type="file" id="audio-file" accept="audio/*" onchange="handleAudioUpload(event)" />
+          <div class="file-upload-label" onclick="document.getElementById('audio-file').click()">
+            <span class="upload-icon">🎵</span>
+            <span>Click to upload audio file</span>
+            <small id="file-name-display">No file selected</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Or Record Live</label>
+        <div class="record-controls">
+          <button class="btn btn-record" id="record-btn" onclick="toggleRecording()">
+            <span class="btn-icon" id="record-icon">🔴</span>
+            <span id="record-label">Start Recording</span>
+          </button>
+          <span class="record-timer" id="record-timer">00:00</span>
+        </div>
+        <!-- Transcript from speech recognition will appear here -->
+        <textarea id="transcript-text" rows="4" placeholder="Recorded or transcribed text will appear here. You can also type or paste lecture speech manually…"></textarea>
+      </div>
+
+      <button class="btn" onclick="convertRecordingToNotes()">
+        <span class="btn-icon">📋</span> Convert to Notes
+      </button>
+
+      <div class="output-box" id="recording-output">
+        <p class="placeholder-text">Structured lecture notes will appear here…</p>
+      </div>
+    </section>
+
+    <!-- ===== TOOL 5: Semester Study Planner ===== -->
+    <section class="card" id="semester-planner-section">
+      <div class="card-icon">🗓️</div>
+      <h2 class="card-title">Semester Study Planner</h2>
+      <p class="card-desc">Paste your semester syllabus or course materials. Get a full weekly study schedule, topic breakdown, and revision periods.</p>
+
+      <div class="form-group">
+        <label for="semester-syllabus">Paste Syllabus or Course Outline</label>
+        <textarea id="semester-syllabus" rows="7" placeholder="Paste your semester syllabus, course outline, or list of topics here…"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="semester-duration">Semester Duration (weeks)</label>
+        <input type="number" id="semester-duration" placeholder="e.g. 15" min="1" max="52" />
+      </div>
+
+      <button class="btn" onclick="generateSemesterPlan()">
+        <span class="btn-icon">🗓️</span> Generate Semester Plan
+      </button>
+
+      <div class="output-box" id="semester-plan-output">
+        <p class="placeholder-text">Your semester plan will appear here…</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <p>AI Study Mentor &copy; 2025 &mdash; Built to empower Nigerian students 🇳🇬</p>
+    <p class="footer-small">Prototype powered by Claude AI API. For educational use.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
